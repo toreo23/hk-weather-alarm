@@ -184,7 +184,7 @@ function Dashboard() {
                         // console.log('alarmtime.hour', alarmtime.hour())
                         // console.log('moment().minute()', moment().minute())
                         // console.log('moment().hour()', moment().hour())
-                        if (alarmtime.minute() === moment().minute() && alarmtime.hour() === moment().hour()) {
+                        if (!alarm.isGoWorkAlarm && alarmtime.minute() === moment().minute() && alarmtime.hour() === moment().hour()) {
                             console.log('time match')
 
                             if ((alarm.isExclude8910 && arrayNewCurrentWarning.includes('TC8NE', 'TC8SE', 'TC8NW', 'TC8SW', 'TC9', 'TC10')) ||
