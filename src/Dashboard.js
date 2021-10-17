@@ -193,7 +193,7 @@ function Dashboard() {
                             }
                             onAlarmPlay(alarm.youtubeId)
                         }
-                        if (currentWarning.includes('TC8NE', 'TC8SE', 'TC8NW', 'TC8SW', 'TC9', 'TC10') && arrayNewCurrentWarning.includes('TC3', 'TC1')) {
+                        if (alarm.isGoWorkAlarm && currentWarning.includes('TC8NE', 'TC8SE', 'TC8NW', 'TC8SW', 'TC9', 'TC10') && arrayNewCurrentWarning.includes('TC3', 'TC1')) {
                             //fire the alarm
                             //setPlayAlarm(true)
                             onAlarmPlay(alarm.youtubeId)
