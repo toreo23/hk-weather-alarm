@@ -36,3 +36,8 @@
     transform: rotate(360deg);
   }
 }
+
+#widget2{
+  height: 50vh;
+  width: 50vw
+}
