@@ -197,12 +197,14 @@ export default function Warnings(props) {
     <>
       {currentDetail.map((detail, id)=>(
         
-        <Accordion>
+        <Accordion
+        sx={{minWidth:'50vw'}}>
            
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
           id="panel1a-header"
+          
         >
          
           <Typography>{renderWarningtitle(detail.warningStatementCode)} {detail.subtype ? ' - ':''} {renderWarningtitle(detail.subtype)}</Typography>
@@ -217,15 +219,19 @@ export default function Warnings(props) {
       </Accordion>
       ))}
     </>}
-      {currentDetail.length === 0 && <Accordion disabled>
+      {currentDetail.length === 0 && 
+      
+      <Accordion disabled sx={{minWidth:'50vw'}}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel3a-content"
           id="panel3a-header"
+          //sx={{minWidth:'50vw'}}
         >
           <Typography>No Weather Warning</Typography>
         </AccordionSummary>
-      </Accordion>}
+      </Accordion>
+      }
       
     </div>
   );

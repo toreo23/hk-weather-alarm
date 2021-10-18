@@ -92,6 +92,7 @@ export default function CreateAlarm(props) {
       <StaticTimePicker
         //displayStaticWrapperAs="mobile"
         //orientation="landscape"
+        ampm={false}
         value={state.alarmTime}
         onChange={(newValue) => {
           setState({...state,
@@ -115,7 +116,7 @@ export default function CreateAlarm(props) {
           }
           label="Not ring when Pre 8 is hoisted"
         />
-        <TextField name="youtubeId" id="youtubeId" label="YouTube ID (optional)" variant="standard" value={state.youtubeId} onChange={handleChangeText}/>
+        <TextField name="youtubeId" id="youtubeId" label="YouTube ID (optional) e.g. xXhEz3hqlQE" variant="standard" value={state.youtubeId} onChange={handleChangeText}/>
       </FormGroup>
       {/* <FormHelperText>Be careful</FormHelperText> */}
       </FormControl>

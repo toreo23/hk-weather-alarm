@@ -75,6 +75,26 @@ function Dashboard() {
 
     const alarmsRef = useRef(null)
 
+    function useInterval(callback, delay) {
+        const savedCallback = useRef();
+      
+        // Remember the latest callback.
+        useEffect(() => {
+          savedCallback.current = callback;
+        }, [callback]);
+      
+        // Set up the interval.
+        useEffect(() => {
+          function tick() {
+            savedCallback.current();
+          }
+          if (delay !== null) {
+            let id = setInterval(tick, delay);
+            return () => clearInterval(id);
+          }
+        }, [delay]);
+      }
+
 
     const onUpdateAlarm = (alarmId, newAlarm) => {
         setAlarms(alarms.map((alarm, id) => id === alarmId ? newAlarm : alarm))
@@ -141,7 +161,7 @@ function Dashboard() {
     const onAlarmPlay = (newVideoID) => {
         
         setPlayAlarm(false)
-        if(!newVideoID=="") setVideoId(newVideoID)
+        if(!newVideoID==="") setVideoId(newVideoID)
         else{ setVideoId("xXhEz3hqlQE")}
         setPlayAlarm(true)
         // player.playVideo();
@@ -150,7 +170,8 @@ function Dashboard() {
         // player.setVolume(100);
     }
 
-    const getWxWarning = (alarms) => {
+    //const getWxWarning = (alarms) => {
+    const getWxWarning = () => {
         console.log('start getwxwarning')
         console.log(alarms)
         fetch('https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=warningInfo&lang=tc')
@@ -192,11 +213,19 @@ function Dashboard() {
                                 return
                             }
                             onAlarmPlay(alarm.youtubeId)
+                            console.log("play alarm alarms", alarms)
+                            console.log("play alarm", {...alarm, isActive:false}, "index", index)
+                            onUpdateAlarm(index, {
+                                ...alarm,
+                                isActive: !alarm.isActive,
+                              })
+
                         }
                         if (alarm.isGoWorkAlarm && currentWarning.includes('TC8NE', 'TC8SE', 'TC8NW', 'TC8SW', 'TC9', 'TC10') && arrayNewCurrentWarning.includes('TC3', 'TC1')) {
                             //fire the alarm
                             //setPlayAlarm(true)
                             onAlarmPlay(alarm.youtubeId)
+                            onUpdateAlarm(index, {...alarm, isActive:false})
                         }
                         setCurrentWarning(arrayNewCurrentWarning)
                     }
@@ -221,15 +250,19 @@ function Dashboard() {
         alarmsRef.current = alarms;
     })
 
-    useEffect(() => {
-        getWxWarning(alarmsRef.current);
-        const timer = setInterval(() => {
-            getWxWarning(alarmsRef.current);
-        }, 60000);
-        return () => {
-            clearInterval(timer);
-        };
-    }, []);
+    // useEffect(() => {
+    //     getWxWarning(alarmsRef.current);
+    //     const timer = setInterval(() => {
+    //         getWxWarning(alarmsRef.current);
+    //     }, 5000);
+    //     return () => {
+    //         clearInterval(timer);
+    //     };
+    // }, []);
+
+    useInterval(() => {
+        getWxWarning()
+      }, 10000);
     
 
     return (
